@@ -1,11 +1,12 @@
 {
   "expo": {
     "name": "Miaow",
-    "slug": "Miaow",
+    "slug": "miaow",
+    "scheme": "miaow",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -13,18 +14,46 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.miaow.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Kedi konumunu haritada görmek için konumuna ihtiyacımız var.",
+        "NSLocationAlwaysUsageDescription": "Kedi konumunu haritada görmek için konumuna ihtiyacımız var.",
+        "NSCameraUsageDescription": "Kediyi fotoğraflamak için kamera izni gerekiyor.",
+        "NSPhotoLibraryUsageDescription": "Galeriden kedi fotoğrafı seçmek için izin gerekiyor."
+      }
     },
     "android": {
+      "package": "com.miaow.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "CAMERA"
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-location",
+      "expo-image-picker",
+      [
+        "@maplibre/maplibre-react-native",
+        {}
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
     }
   }
 }
