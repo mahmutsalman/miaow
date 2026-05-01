@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import Map, { Source, Layer, MapRef, MapLayerMouseEvent } from 'react-map-gl/maplibre';
 import { Sighting } from '@/lib/supabase';
 import { Colors } from '@/constants/colors';
@@ -16,8 +16,6 @@ const MapView = forwardRef<MapViewHandle, Props>(function MapView(
   ref
 ) {
   const mapRef = useRef<MapRef>(null);
-  const [debugZoom, setDebugZoom] = useState(15);
-
   // ── GeoJSON data ──────────────────────────────────────────────────────────
   const geojson = useMemo(
     () => ({
@@ -71,7 +69,7 @@ const MapView = forwardRef<MapViewHandle, Props>(function MapView(
       mapStyle={MAP_STYLE}
       interactiveLayerIds={['cat-cluster', 'cat-pin', 'cat-pin-bg']}
       onClick={handleClick}
-      onZoom={(e) => setDebugZoom(Math.round(e.viewState.zoom))}
+
     >
       {/* ── GeoJSON source with built-in clustering ── */}
       <Source
@@ -153,34 +151,7 @@ const MapView = forwardRef<MapViewHandle, Props>(function MapView(
         />
       </Source>
 
-      {/* ── Debug overlay — Chrome sağ tık olmadan durumu görmek için ── */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 80,
-          right: 12,
-          background: 'rgba(0,0,0,0.78)',
-          color: '#fff',
-          padding: '8px 11px',
-          borderRadius: 8,
-          fontSize: 11,
-          fontFamily: 'monospace',
-          lineHeight: 1.65,
-          zIndex: 9999,
-          pointerEvents: 'none',
-          userSelect: 'none',
-          minWidth: 140,
-        }}
-      >
-        <div style={{ fontWeight: 700, marginBottom: 3 }}>🛠 Debug</div>
-        <div>Zoom: <b>{debugZoom}</b></div>
-        <div>Nokta sayısı: <b>{sightings.length}</b></div>
-        <div>Render: <b>Source/Layer ✓</b></div>
-        <div style={{ fontSize: 9, marginTop: 4, opacity: 0.6 }}>
-          cluster maxZoom: 15<br />
-          cluster radius: 50px
-        </div>
-      </div>
+
     </Map>
   );
 });
